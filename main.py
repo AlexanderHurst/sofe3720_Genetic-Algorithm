@@ -19,6 +19,7 @@ cityList = []
 # /================================== CLASSES ==================================/
 # CLASS: City
 class City:
+    # initiate the city
     def __init__(self, x, y):
         self.x = None
         self.y = None
@@ -34,37 +35,45 @@ class City:
         else:
             self.y = random.randint * 200
         
+    # get coordinates X
     def get_x(self):
         return self.x
     
+    # get coordinates Y
     def get_y(self):
         return self.y
     
+    # get euclid distance between 2 cities
     def distance(self, city):
         x_distance = abs(self.x - city.x)
         y_distance = abs(self.y - city.y)
         distance = np.sqrt((x_distance ** 2) + (y_distance ** 2))
         return distance
 
+    # self representation
     def __repr__(self):
         return "(" + str(self.x) + "," + str(self.y) + ")"
 
-# CLASS: Salesman
+# CLASS: Salesman <-- dont think i need or use this..
 class Salesman:
     destination_cities = []
 
+    # to trip add a city
     def add_city(self, city):
         self.destination_cities.append(city)
 
+    # return the route
     def get_salesman_route(self, index):
         return self.destination_cities[index]
 
+    # get the number of cities on route
     def get_number_of_cities(self):
         return len(self.destination_cities)    
 
 
 # CLASS: Fitness
 class Fitness:
+    # initiate the route
     def __init__(self, route):
         self.route = route
         self.distance = 0
@@ -93,17 +102,19 @@ class Fitness:
 
         return self.distance
 
+    # get fitness function for route
     def route_fitness(self):
         if self.fitness == 0:
             self.fitness = 1 / float(self.route_Distance())
         return self.fitness
 
 # /================================== FUNCTIONS ==================================/
+# create a route from one cities to citites
 def create_Route(city_list):
     route = random.sample(city_list, len(city_list))
     return route
 
-
+# get and initiate initial population
 def initial_population(pop_size, city_list):
     population = []
 
@@ -112,14 +123,14 @@ def initial_population(pop_size, city_list):
 
     return population
 
-
+# rank the routes on their population
 def rank_routes(population):
     best_route_results = {}
     for i in range(0, len(population)):
         best_route_results[i] = Fitness(population[i]).route_fitness()
     return sorted(best_route_results.items(), key = operator.itemgetter(1), reverse = True)
 
-
+# select routes given their fitness
 def selection(pop_ranked, best_size):
     selection_results = []
 
@@ -138,7 +149,7 @@ def selection(pop_ranked, best_size):
     
     return selection_results
 
-
+# create a mating pool
 def mating_pool(population, selection_results):
     mating_pool = []
 
@@ -148,7 +159,7 @@ def mating_pool(population, selection_results):
 
     return mating_pool
 
-
+# breed two parents and generate a child
 def breed(parent1, parent2):
     child = []
     child_p1 = []
@@ -169,7 +180,7 @@ def breed(parent1, parent2):
 
     return child
 
-
+# breed the population
 def breed_population(mating_pool, best_size):
     children = []
     length = len(mating_pool) - best_size
@@ -184,7 +195,7 @@ def breed_population(mating_pool, best_size):
 
     return children
 
-
+# mutate an inidividual (used by mutate population def)
 def mutate(indvidual, mutation_rate):
     for swapped in range(len(indvidual)):
         if (random.random() < mutation_rate):
@@ -198,7 +209,7 @@ def mutate(indvidual, mutation_rate):
     
     return indvidual
 
-
+# mutate the population (calls mutate)
 def mutate_population(population, mutation_rate):
     mutated_population = []
 
@@ -208,7 +219,7 @@ def mutate_population(population, mutation_rate):
 
     return mutate_population
 
-
+# get the values of the next generation of population
 def next_gen(current_generation, best_size, mutation_rate):
     popRanked = rank_routes(current_generation)
     selectionResults = selection(pop_ranked, best_size)
@@ -217,7 +228,7 @@ def next_gen(current_generation, best_size, mutation_rate):
     next_gen = mutate_population(children, mutation_rate)
     return next_gen
 
-
+# this is the genetic algorithm: gets best route for travel
 def geneticAlgorithm(population, pop_size, best_size, mutation_rate, generations):
     pop = initial_population(pop_size, population)
 
@@ -232,7 +243,7 @@ def geneticAlgorithm(population, pop_size, best_size, mutation_rate, generations
 
     return best_route
 
-
+# plot the best route (matplotlib)
 def geneticAlgorithmPlot(population, pop_size, best_size, mutation_rate, generations):
     pop = initial_population(pop_size, population)
     progress = []
@@ -251,9 +262,11 @@ def geneticAlgorithmPlot(population, pop_size, best_size, mutation_rate, generat
 
 # /================================== MAIN ==================================/
 
+# create cities
 for i in range(0, 25):
     cityList.append(City(x = int(random.random() * 200), y = int(random.random()) * 200) )
 
+# get best route between them
 geneticAlgorithm(cityList, 100, 20, 0.01, 500)
 geneticAlgorithmPlot(population = cityList, pop_size = 100, best_size = 20, mutation_rate = 0.01, generations = 500)
 
