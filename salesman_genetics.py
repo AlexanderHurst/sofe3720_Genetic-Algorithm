@@ -94,31 +94,6 @@ class GeneticAlgorithm:
             mutants.append(child)
         return mutants
 
-# # mutate an inidividual (used by mutate population def)
-# so that you dont create local convergance
-# def mutate(indvidual, mutation_rate):
-#     for swapped in range(len(indvidual)):
-#         if (random.random() < mutation_rate):
-#             swapWith = int(random.random() * len(indvidual))
-
-#             city1 = indvidual[swapped]
-#             city2 = indvidual[swapWith]
-
-#             indvidual[swapped] = city2
-#             indvidual[swapWith] = city1
-
-#     return indvidual
-
-# # mutate the population (calls mutate)
-# def mutate_population(population, mutation_rate):
-#     mutated_population = []
-
-#     for index in range(0, len(population)):
-#         mutated_index = mutate(population[index], mutation_rate)
-#         mutate_population.append(mutated_index)
-
-#     return mutate_population
-
     # 6 - REPEAT
     def run(self, number_of_iterations):        # Run the algorithm numerous times to get best results from mutated population
         for i in range(number_of_iterations):
