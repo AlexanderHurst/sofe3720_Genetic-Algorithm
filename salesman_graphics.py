@@ -10,8 +10,12 @@ def Plot_gen(routes):
     for route in routes:
         plt.clf()
         points = np.array([[city.get_x(), city.get_y()] for city in route])
+        new_point = np.array([[route[0].get_x(), route[0].get_y()]])
+
+        points = np.append(points, new_point, axis = 0)
+        
         plt.plot(*points.T)
 
-        plt.pause(0.001)
+        plt.pause(0.01)
 
     plt.show()
