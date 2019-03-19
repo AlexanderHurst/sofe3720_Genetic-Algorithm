@@ -15,6 +15,8 @@ class GeneticAlgorithm:
         self.mutation_rate = mutation_rate      # Initialize the mutation rate for the mutation stage
         self.city_list = city_list              # Get the list of cities salesman must visit
 
+        self.gen_bests = []
+
         self.pop = None                         # Start with a population of none 
         self._initialization()                  # Start creating population with route values
         self._evaluation()                      # Sort the routes based on fitness
@@ -42,6 +44,8 @@ class GeneticAlgorithm:
 
         mating_pool = []
 
+        mating_pool.append(self.pop[0])
+
         # Choose 1 element, route, from each pointer interval
         fit_sum = self.pop[0].fitness
         i = 0
@@ -55,7 +59,7 @@ class GeneticAlgorithm:
     # Breed the population
     # 4 - CROSSOVER
     def _crossover(self, mating_pool):
-        num_children = self.pop_size - self.best_size
+        num_children = self.pop_size - self.best_size - 1
         children = []
 
         for i in range (num_children):
@@ -97,13 +101,15 @@ class GeneticAlgorithm:
     # 6 - REPEAT
     def run(self, number_of_iterations):        # Run the algorithm numerous times to get best results from mutated population
         for i in range(number_of_iterations):
+            self.gen_bests.append(self.pop[0].route)
             parents = self._selection()         # set the parent population     
             children = self._crossover(parents) # Breed the population
             # print("creating mutants")
             mutants = self._mutation(children)  # Mutate the population
             self.pop = parents
-            self.pop.extend(mutants)  # Set the population to the mutated population
+            self.pop.extend(mutants)            # Set the population to the mutated population
             self._evaluation()                  # Evaluate fitness
+            print("fitness:", self.pop[0].fitness)
 
     # Termination condition: 
     #   The termination condition has been decided to be a set number of iterations

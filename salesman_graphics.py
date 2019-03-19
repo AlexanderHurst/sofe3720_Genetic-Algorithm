@@ -1,17 +1,17 @@
 from matplotlib import pyplot as plt
-
+from matplotlib import path
+from salesman_objects import City
+import numpy as np
+import random
 
 # plot the best route (matplotlib)
-def geneticAlgorithmPlot(progress):
-    # pop = initial_population(pop_size, population)
-    # progress = []
-    # progress.append(1/rank_routes(pop)[0][1])
 
-    # for i in range(0, generations):
-    #     pop = next_gen(pop, best_size, mutation_rate)
-    #     progress.append(1/rank_routes(pop)[0][1])
+def Plot_gen(routes):
+    for route in routes:
+        plt.clf()
+        points = np.array([[city.get_x(), city.get_y()] for city in route])
+        plt.plot(*points.T)
 
-    plt.plot(progress)
-    plt.ylabel('Distance')
-    plt.xlabel('Generation')
+        plt.pause(0.001)
+
     plt.show()
