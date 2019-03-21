@@ -54,6 +54,10 @@ if len(sys.argv) == 1:
     salesman_graphics.Plot_gen(gen3.gen_bests)
     print("Modified mutation done")
 
+    print("Cost for original crossover and mutation (distance):", 1/gen.gen_bests[len(gen.gen_bests)-1][1])
+    print("Cost for modified crossover (distance):", 1/gen2.gen_bests[len(gen2.gen_bests)-1][1])
+    print("Cost for modified mutation (distance):", 1/gen3.gen_bests[len(gen3.gen_bests)-1][1])
+
 elif len(sys.argv) == 7:
     filename = sys.argv[1]
     pop_size = int(sys.argv[2])
@@ -75,6 +79,7 @@ elif len(sys.argv) == 7:
         gen.run(generations)
 
         pprint(gen.gen_bests[len(gen.gen_bests)-1])
+        print("Cost (distance):", 1/gen.gen_bests[len(gen.gen_bests)-1][1])
 
         salesman_graphics.Plot_gen(gen.gen_bests)
     else:
@@ -90,6 +95,7 @@ elif len(sys.argv) == 7:
         gen.run(generations)
 
         pprint(gen.gen_bests[len(gen.gen_bests) - 1])
+        print("Cost (distance):", 1/gen.gen_bests[len(gen.gen_bests)-1][1])
 
 else:
     print("Usage: python(3) main.py \"filename\" population_size mating_pool_size mutation_rate number_generations xy_city_loc")
