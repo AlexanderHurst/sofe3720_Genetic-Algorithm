@@ -184,7 +184,7 @@ class GeneticAlgorithm:
     # 6 - REPEAT
     # Run the algorithm numerous times to get best results from mutated population
     def run(self, number_of_iterations):
-        for i in range(number_of_iterations):
+        for _ in range(number_of_iterations):
             self.gen_bests.append([self.pop[0].route, self.pop[0].fitness])
             parents = self._selection()         # set the parent population     
             children = self._crossover(parents) # Breed the population
